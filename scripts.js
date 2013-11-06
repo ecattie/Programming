@@ -49,23 +49,23 @@ function compList(list){
 
 function printRule(rule){
     if (typeof rule.complete == 'undefined'){
-        throw('"The complete status is missing for" + toDo[i].name + "."');
+        throw('"The complete status is missing for" + toDo[i].task + "."');
     }
 
     if (rule.complete === true) {
         return ('<li class = "list-group-item">' + 'Done' + '</li>');
     
     } else { 
-        return ('<li class = "list-group-item">' + rule.name + rule.due + '</li>');
+        return ('<li class = "list-group-item">' + rule.task + rule.task + '</li>');
         }
 }
 
 $(document).ready(function() { 
     var toDo = 
-        [{name:'Dust the house.', due:'Tuesday', 'complete':true},
-        {name:'Vacuum upstair and downstairs.', due:'Wednesday', 'complete':false},
-        {name:'Wash the dishes.', due:'Thursday', 'complete':true},
-        {name:'Do the laundry.', due:'Friday', 'complete':false}];
+        [{task:'Dust the house.', due:'Tuesday', 'complete':true},
+        {task:'Vacuum upstair and downstairs.', due:'Wednesday', 'complete':false},
+        {task:'Wash the dishes.', due:'Thursday', 'complete':true},
+        {task:'Do the laundry.', due:'Friday', 'complete':false}];
 
 var chores = '<ul class="list-group">';
 
@@ -89,6 +89,36 @@ console.log(chores);
 $('.container').append(chores);
 
 });
+
+
+//Object constructor function for new chores
+
+
+function AnotherToDo () {
+    this.anotherTask = task;
+    this.anotherDue = due;
+    this.anotherComplete = complete;
+}
+
+       var task = new task ('Make an appointment for the car.'); 
+        
+        var due = new Date();
+        due.setFullYear(2013,13,13);
+        
+        var complete = new complete (false);
+    
+        var AnotherToDo = new AddToDo ('another');
+        
+
+function AddToDo (){
+            return(AnotherToDo());
+        }
+
+ //       var addTask = new task ();
+
+
+
+
 
 
 
