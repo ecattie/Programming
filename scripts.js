@@ -1,15 +1,12 @@
-
 //String Object Variable
 /*
 var toDo = ["Dust","Vacuum","Dishes","Laundry"];
    document.write("<ul class='list-group'>");
    for (var i = 0; i < toDo.length; i++){
-document.write("<li class= 'list-group-item'>" + toDo[i] + '</li>');
 }
+document.write("<li class= 'list-group-item'>" + toDo[i] + '</li>');
 document.write("</ul>");
 */
-
-
 /*
 //Array
 
@@ -22,8 +19,6 @@ var toDo = [{'name':"Dust the house.", 'due':"Tuesday", 'complete':true},
 
 for (var i = 0; i < toDo.length; i++){
     
-  document.write('<li class= "list-group-item">' + toDo[i].name + '</li>');
-  
   try{
     compList(toDo[i]);
     }
@@ -32,7 +27,8 @@ for (var i = 0; i < toDo.length; i++){
     } 
   
     }
-
+    
+document.write('<li class= "list-group-item">' + toDo[i].name + '</li>');
 document.write('</ul>');
 
 
@@ -43,78 +39,135 @@ function compList(list){
    
 }
 */
-
-
 //jquery CRUD
 
-function printRule(rule){
-    if (typeof rule.complete == 'undefined'){
-        throw('"The complete status is missing for" + toDo[i].task + "."');
-    }
 
+function printRule(rule) {
+    if (typeof rule.complete == 'undefined') {
+        throw ('"The complete status is missing for" + toDo[i].task + "."');
+    }
     if (rule.complete === true) {
-        return ('<li class = "list-group-item">' + 'Done' + '</li>');
-    
-    } else { 
-        return ('<li class = "list-group-item">' + rule.task + rule.task + '</li>');
-        }
+        return ('<li class = "list-group-item success">' + rule.description + '</li>');
+    } else {
+        return ('<li class = "list-group-item">' + rule.description + '</li>');
+
+
 }
 
-$(document).ready(function() { 
-    var toDo = 
-        [{task:'Dust the house.', due:'Tuesday', 'complete':true},
-        {task:'Vacuum upstair and downstairs.', due:'Wednesday', 'complete':false},
-        {task:'Wash the dishes.', due:'Thursday', 'complete':true},
-        {task:'Do the laundry.', due:'Friday', 'complete':false}];
+function removeCompleted() {
+    $('.success').remove();
+}
 
-var chores = '<ul class="list-group">';
+}
 
+
+
+$(document).ready(function() {
+
+    var toDo = [{
+        description: 'Dust the house.',
+        dueDate: 'Tuesday',
+        'complete': true
+    },
+                {
+        description: 'Vacuum upstair and downstairs.',
+        dueDate: 'Wednesday',
+        'complete': false
+    },
+                {
+        description: 'Wash the dishes.',
+        dueDate: 'Thursday',
+        'complete': true
+    },
+                {
+        description: 'Do the laundry.',
+        dueDate: 'Friday',
+        'complete': false
+    }];
+    var chores = '<ul class="list-group">';
     for (var i = 0; i < toDo.length; i++) {
-//        $('<li class= "list-group-item">').append(toDo[i] + '</li>');
-
-  
-      try{
-        chores += printRule(toDo[i]);
-        }
-        catch(error) {
+        //        $('<li class= "list-group-item">').append(toDo[i] + '</li>');
+        try {
+            chores += printRule(toDo[i]);
+        } catch (error) {
             console.log("There was an error:" + error);
-        } 
-  
+        }
     }
+    chores += '</ul>';
+        console.log(chores);
+    $('.container-inner').append(chores);
 
-chores += '</ul>';
+ 
 
-console.log(chores);
 
-$('.container').append(chores);
 
-});
+/*
+Assignment: To-Do List #5 - Event Listening
+Due: November 13, 2013
+The final iteration of the to-do list will handle user events such as clicks, double-clicks, keypresses, and form submissions. 
+You’ll use jQuery to bind event listeners to DOM elements in an unobtrusive manner.  
+ 
+ 
+Listen for double-clicks to mark a task complete 
+(hint - should modify the HTML of the task AND it should also modify the underlying object in your task array.)
+ 
+Bind your new “Add Task” function from last week to a form with fields where users can fill out a name and hit “submit.”
+docs.google.com/document/d/15uvKXpM7xIw72_g203pe0X-R5D6VwKtcZNB-73GskyI/edit?usp=sharing
+
+
+bootstrap add text field and submit button
+*/
+   
+    $('#submitTaskForm').on('submit', function(event) {
+        event.preventDefault();
+        var submitTask = $(this).find('input').val();
+        addTask(submitTask);
+        console.log(submitTask);
+
+    });
+
+
+//write .on submit remove text from input field
+  
 
 
 //Object constructor function for new chores
+//constructor function
 
-
-function AnotherToDo () {
-    this.anotherTask = task;
-    this.anotherDue = due;
-    this.anotherComplete = complete;
+function Task(description) {
+    //set var obj
+    var obj = {};
+    obj.description = description;
+    obj.complete = false;
+//    var dueDate = new dueDate();
+//    dueDate.setDate(dueDate.getDate() + 7);
+//    obj.dueDate = dueDate;
+    return obj;
 }
 
-       var task = new task ('Make an appointment for the car.'); 
-        
-        var due = new Date();
-        due.setFullYear(2013,13,13);
-        
-        var complete = new complete (false);
+function addTask(description) {
+    var newTask = new Task(description);
+    toDo.push(newTask);
+    var $li = printRule(newTask);
+    $('ul.list-group').append($li);
+}
+
+function markComplete($description){
+    $description.addclass('success');
     
-        var AnotherToDo = new AddToDo ('another');
-        
+        if($description.text().indexof(toDo[i]) < -1){
+        toDo[i].complete = true;
+            }
+    }
+ //  markComplete 
+    $('ul.list-group').on('dblclick', 'li', function(){
+        markComplete($(this));
 
-function AddToDo (){
-            return(AnotherToDo());
-        }
+});
 
- //       var addTask = new task ();
+//close document ready function
+});
+
 
 
 
